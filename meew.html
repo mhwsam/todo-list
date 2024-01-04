@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily ToDo List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: antiquewhite;
+        }
+
+        #todo-container {
+            background-color: #fff;
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 40px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        #todo-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .todo-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border: 1px solid #ddd;
+            margin-bottom: 5px;
+        }
+
+        .todo-item input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        #todo-input,
+        button {
+            width: calc(50% - 5px);
+            /* Set both elements to 50% width with a small margin in between */
+            box-sizing: border-box;
+            /* Include padding and border in the element's total width */
+            padding: 8px;
+            /* Add padding for better appearance */
+        }
+
+        .delete-btn {
+            background-color: #ff5555;
+            color: #fff;
+            border: none;
+            padding: 8px 10px;
+            /* Adjust padding for better appearance */
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="todo-container">
+        <h2>দৈনিক কাজের তালিকা</h2>
+        <ul id="todo-list"></ul>
+        <input type="text" id="todo-input" placeholder="Add a new task">
+        <button onclick="addTodo()">নতুন টাস্ক যুক্ত করুন</button>
+    </div>
+
+    <script>
+        
+        function addTodo() {
+            var inputElement = document.getElementById('todo-input');
+            var inputValue = inputElement.value.trim();
+
+            if (inputValue === '') {
+                alert('একটাও টাস্ক ইনপুট না করে ToDo লিস্টে কি যুক্ত করতে চান ? মাইর চিনেন মিয়া ?');
+                return;
+            }
+
+            var todoList = document.getElementById('todo-list');
+            var listItem = document.createElement('li');
+            listItem.className = 'todo-item';
+
+            var checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.addEventListener('change', toggleCompleted);
+
+            var taskText = document.createElement('span');
+            taskText.textContent = inputValue;
+
+            var deleteBtn = document.createElement('button');
+            deleteBtn.className = 'delete-btn';
+            deleteBtn.textContent = 'Delete';
+            deleteBtn.addEventListener('click', deleteTodo);
+
+            listItem.appendChild(checkbox);
+            listItem.appendChild(taskText);
+            listItem.appendChild(deleteBtn);
+
+            todoList.appendChild(listItem);
+
+            inputElement.value = '';
+        }
+
+        function toggleCompleted() {
+            // Toggle the completed state of the task
+            var listItem = this.parentNode;
+            listItem.classList.toggle('completed');
+        }
+
+        function deleteTodo() {
+            // Remove the task from the list
+            var listItem = this.parentNode;
+            listItem.parentNode.removeChild(listItem);
+        }
+    </script>
+
+</body>
+
+</html>
